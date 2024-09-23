@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member">
+
+	<insert id="insertMember" parameterType="memVO">
+		INSERT INTO MEMBER (
+			MEM_NO, MEM_ID, MEM_PW, MEM_EM, MEM_NM,  MEM_ADDR, 
+			MEM_TEL, MEM_GN, MEM_REG, DEL_YN, MEM_DATE,
+			 MEM_ADDR2
+			 
+		) VALUES(
+			SEQ_MEM.nextval, #{mem_id}, #{mem_pw}, #{mem_em},#{mem_nm},
+			 #{mem_addr}, #{mem_tel}, #{mem_gn}, #{mem_reg},
+			 'N', sysdate, #{mem_addr2}
+			 
+		)
+	
+	</insert>
+
+	<select id="loginCheck" parameterType="map" resultType="String">
+		SELECT MEM_ID FROM MEMBER
+		WHERE MEM_ID = #{uId} 
+		AND MEM_PW = #{uPw}
+		AND DEL_YN = 'N'
+	</select>
+	
+	<select id="findId" parameterType="map" resultType="String">
+		SELECT MEM_ID FROM MEMBER
+		WHERE MEM_NM = #{name}
+		AND MEM_TEL = #{tel}
+	</select>
+	
+	<select id="findPw" parameterType="map" resultType="String">
+		SELECT MEM_PW FROM MEMBER
+		WHERE MEM_ID = #{uId}
+		AND MEM_REG = #{reg}
+	</select>
+	
+	<select id="memSearch" parameterType="String" resultMap="memMap">
+		SELECT 
+			MEM_NO,
+			MEM_ID,
+			MEM_PW,
+			MEM_EM,
+			MEM_ADDR,
+			MEM_TEL,
+			MEM_NM,
+			MEM_GN,
+			MEM_REG,
+			DEL_YN,
+			MEM_DATE,
+			MEM_ADDR2
+		
+			FROM MEMBER
+			
+			WHERE MEM_NM LIKE '%'||#{mem_nm}||'%' AND DEL_YN = 'N'
+	</select>
+	
+	<update id="updatePassword" parameterType="map">
+		UPDATE MEMBER
+		SET MEM_PW = #{tempPassword}
+		WHERE MEM_ID = #{uId}
+	</update>
+	
+	<update id="modifyMember" parameterType="memVO">
+		update MEMBER
+		set MEM_PW = #{mem_pw},
+			MEM_TEL = #{mem_tel},
+			MEM_EM = #{mem_em},
+			MEM_ADDR = #{mem_addr},
+			MEM_ADDR2 = #{mem_addr2}
+			where MEM_ID = #{mem_id}
+	</update>
+	
+<!-- 	회원탈퇴 시 DEL_YN 값을 'Y'로 변경하는 쿼리 -->
+	<update id="updateMemberDelYN" parameterType="String">
+		UPDATE MEMBER
+		SET DEL_YN = 'Y'
+		WHERE MEM_ID = #{MEM}
+	</update>
+	
+	<select id="getMemberPassword" parameterType="String" resultType="String">
+		SELECT MEM_PW FROM MEMBER
+		WHERE MEM_ID = #{userId}
+	</select>
+	
+	
+	<resultMap type="kr.or.ddit.member.vo.MemberVO" id="memMap">
+		<id column="mem_id" property="mem_id" /> <!-- memId -> key 값 -->
+		<result column="mem_pw" property="mem_pw" />
+		<result column="mem_nm" property="mem_nm" />
+		<result column="mem_tel" property="mem_tel" />
+		<result column="mem_addr" property="mem_addr" />
+		<result column="mem_addr2" property="mem_addr2" />
+		<result column="mem_em" property="mem_em"/>
+		<result column="reg_dt" property="reg_dt" />
+		<result column="mem_no" property="mem_no" />
+		<result column="del_yn" property="del_yn" />
+	</resultMap>
+	
+	<select id="getMember" parameterType="String" resultMap="memMap">
+		SELECT * FROM MEMBER
+		WHERE MEM_ID = #{mem_id}
+				AND DEL_YN = 'N'
+	</select>
+	
+	<!-- 회원계정 전체정보 -->
+	<select id="MemberList" resultMap="memMap">
+		SELECT * FROM MEMBER
+		ORDER BY mem_no ASC	
+	</select>
+	
+	<!-- 회원계정 상세정보 -->
+	<select id="MemberDetail" resultMap="memMap">
+		SELECT * FROM MEMBER
+		WHERE mem_no = #{mem_no}
+	</select>
+	
+	<!-- 관리자 회원계정 탈퇴 업데이트  -->
+	<update id="MemberUpdate" parameterType="memVO">
+		update MEMBER
+		SET
+			del_yn = 'Y'
+		WHERE mem_no = #{mem_no}
+	</update>
+	
+</mapper>

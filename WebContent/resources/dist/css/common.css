@@ -1,0 +1,146 @@
+@charset "utf-8";
+@import url(reset.css);
+@import url(fonts.css);
+
+.hidescroll{overflow:hidden;height:100%}
+.wrap {width:100%; padding:0; margin:0;}
+
+
+/*header*/
+#header .header_top{width:1320px; margin:0 auto;}
+#header .header_top .logo{width:20%; float:left; line-height:80px;padding-left:27px;}
+#header .header_top .logo img{vertical-align: middle;}
+#header .header_top .tel{width:25%;  font-size:18px; font-weight:700; text-align:right; margin:0 0 0 auto; line-height:80px;}
+#header .header_top .tel span{font-size:26px; color:#18afa0; font-weight:800;}
+
+/*gnb*/
+#gnb {width:100%; background:#00a796; box-shadow:.05em .05em 5px #d2d2d2; z-index:999;}
+
+/*footer*/
+#footer{width:100%; background:#f2f2f2; padding:15px 0 45px 0; overflow:hidden;border-top:solid 1px #dfdfdf}
+#footer .footer_wrap{width:1320px; margin:0 auto; overflow:hidden;}
+#footer .f_logo{width:20%; float:left; margin-top:19px;}
+#footer .r_footer{width:80%; float:right; display:inline-block;}
+#footer .footer_top{overflow:hidden;}
+#footer .footer_top ul li{float:left; color:#000; line-height:14px; padding:0 20px;margin: 24px 0 27px 0;}
+#footer .footer_top ul li:first-child{padding-left:0px;}
+#footer .footer_top ul li:last-child {color:#1dbbaf; font-size:18px; font-weight:600; line-height:16px;}
+#footer .footer_top a {
+    float:left; color:#000; font-size:16px; font-weight:600; line-height:16px; 
+    margin-right: 2px;
+}
+#footer .footer_top span{float:right;margin-top:4px;}
+#footer .footer_bottom{display:block; border-top:1px solid #d8d8d8; padding-top:20px;}
+#footer .footer_bottom ul li{color:#000; font-size:14px; font-weight:600; line-height:22px;}
+
+.content{width:1320px; margin:0 auto; overflow:hidden;}
+
+#quick_div {position:fixed; width:100%; height:1px; top:137px; text-align:right; z-index:999999;}
+
+
+/** cs_form **/
+.cs_form {overflow:hidden;display:inline-block;position:relative;font-size:0}
+.cs_form input{position:absolute;left:-10px;top:2px;width:2px;height:2px;outline:none;-webkit-appearance: none}
+.cs_form label{display:inline-block;position:relative;padding:0 0 0 28px;font-size:13px;color:#333;height:20px;line-height:20px;cursor:pointer;background:url('../../images/sub/sub2/2/cs_check.png') no-repeat 0 0}
+.cs_form input:checked + label{background-position:0 100%}
+
+
+/** revervation_pop **/
+.revervation_pop{display:none;overflow:hidden;position:fixed;left:0;top:0;z-index:9999999;padding:20px;width:100%;height:100%;font-size:0;min-width:1020px;text-align:center;box-sizing:border-box}
+.revervation_pop:before{content:'';display:inline-block;margin:0 0 0 -10px;height:100%;vertical-align:middle}
+.revervation_pop:after{content:'';position:fixed;left:0;top:0;z-index:999999998;width:100%;height:100%;background:url('../../images/sub/opa60.png')}
+.revervation_pop .inner{overflow:hidden;display:inline-block;position:relative;z-index:999999999;width:980px;text-align:left;background:#fff;vertical-align:middle}
+.revervation_pop .inner .top{padding:22px 0 0 35px;height:42px;}
+.revervation_pop .inner .top strong{margin:0 60px 0 0;font-size:22px;color:#4f4f4f;font-weight:800}
+.revervation_pop .inner .top span{padding:0 0 0 20px;font-size:14px;color:#cd0035;font-weight:700;background:url('../../images/sub/sub2/2/ico1.png') no-repeat 0 0}
+.revervation_pop .inner .step{overflow:hidden}
+.revervation_pop .inner .step > li{float:left;margin:0 0 0 35px}
+.revervation_pop .inner .step > li .tit{height:40px;font-size:16px;color:#4f4f4f;font-weight:800;line-height:0.78}
+.revervation_pop .inner .step > li .tit span{display:inline-block;position:relative;top:2px;margin:0 4px 0 0;font-size:40px;color:#cbcbcb}
+.revervation_pop .inner .step > .select .tit,
+.revervation_pop .inner .step > .select .tit span{color:#00a795}
+.revervation_pop .inner .step .step1{margin:0 0 0 35px;width:110px}
+.revervation_pop .inner .step .step1 .check{border:solid 1px #d8d8d8}
+.revervation_pop .inner .step .step1 .check li{overflow:hidden;border-top:solid 1px #e5e5e5}
+.revervation_pop .inner .step .step1 .check li:first-child{border:none}
+.revervation_pop .inner .step .step1 .check li input[type="radio"]{position:absolute;left:-50px;top:0}
+.revervation_pop .inner .step .step1 .check li label{display:block;height:36px;line-height:36px;font-size:15px;color:#4f4f4f;text-align:center;cursor:pointer}
+.revervation_pop .inner .step .step1 .check li input[type="radio"]:checked + label{color:#fff;background:#00a795}
+.revervation_pop .inner .step .step2{width:385px}
+.revervation_pop .inner .step .step2 .select_list{overflow:auto;max-height:308px;border:solid 1px #d8d8d8}
+.revervation_pop .inner .step .step2 .select_list > li{overflow:hidden;position:relative;border-top:solid 1px #ddd}
+.revervation_pop .inner .step .step2 .select_list > li:first-child{border:none}
+.revervation_pop .inner .step .step2 .select_list > li input[type="radio"]{position:absolute;left:-50px;top:0}
+.revervation_pop .inner .step .step2 .select_list > li .btn_select{position:absolute;right:14px;top:21px;z-index:10;width:65px;height:25px;text-indent:-9999px;background:url('../../images/sub/sub2/2/btn.png') no-repeat 0 100%;cursor:pointer}
+.revervation_pop .inner .step .step2 .select_list > li input[type="radio"]:checked + .btn_select{background-position:0 0}
+.revervation_pop .inner .step .step2 .select_list > li input[type="radio"]:checked + .btn_select + .in_select{background:#e3f4f2}
+.revervation_pop .inner .step .step2 .select_list > li .in_select{padding:21px 14px}
+.revervation_pop .inner .step .step2 .select_list > li .in_select .photo{float:left}
+.revervation_pop .inner .step .step2 .select_list > li .in_select .info{position:relative;margin:0 0 0 102px;min-height:106px;line-height:1.5}
+.revervation_pop .inner .step .step2 .select_list > li .in_select .info .txt1{margin:0 0 6px 0;font-size:16px;color:#2e2d2d;font-weight:700}
+.revervation_pop .inner .step .step2 .select_list > li .in_select .info .txt1 span{font-size:13px}
+.revervation_pop .inner .step .step2 .select_list > li .in_select .info .txt2{margin:0 0 6px 0;font-size:14px;color:#2e2d2d;font-weight:700}
+.revervation_pop .inner .step .step2 .select_list > li .in_select .info .txt3{position:relative;padding:0 0 0 58px;font-size:12px;color:#515566}
+.revervation_pop .inner .step .step2 .select_list > li .in_select .info .txt3 span{position:absolute;left:0;top:0;font-weight:700;color:#2e2d2d}
+.revervation_pop .inner .step .step3{width:350px}
+.revervation_pop .inner .step .step3 .bottom{height:308px}
+.revervation_pop .inner .step .step3 .bottom .calendar{float:left;width:255px}
+.revervation_pop .inner .step .step3 .bottom .calendar .line{margin:0 0 15px 0;padding:12px;border:solid 1px #ddd}
+.revervation_pop .inner .step .step3 .bottom .calendar .nav{position:relative;margin:0 4px;height:28px;font-size:17px;color:#b0b0b0;font-weight:800;text-align:center;border-bottom:solid 1px #ddd}
+.revervation_pop .inner .step .step3.ok .bottom .calendar .nav,
+.revervation_pop .inner .step .step3.select .bottom .calendar .nav{color:#4f4f4f}
+.revervation_pop .inner .step .step3 .bottom .calendar .nav a{position:absolute;top:0;width:20px;height:19px;text-indent:-9999px;background:url('../../images/sub/sub2/2/nav.png') no-repeat 0 0}
+.revervation_pop .inner .step .step3 .bottom .calendar .nav .prev{left:0}
+.revervation_pop .inner .step .step3 .bottom .calendar .nav .next{right:0;background-position:0 100%}
+.revervation_pop .inner .step .step3 .bottom .calendar .table table{;font-size:13px;color:#4f4f4f;font-weight:800}
+.revervation_pop .inner .step .step3 .bottom .calendar .table table th{height:32px;text-align:center;font-weight:800}
+.revervation_pop .inner .step .step3 .bottom .calendar .table table td{text-align:center;border:solid 3px #fff}
+.revervation_pop .inner .step .step3 .bottom .calendar .table table td a{display:block;height:24px;line-height:24px;color:#4f4f4f;background:#deeaec}
+.revervation_pop .inner .step .step3 .bottom .calendar .table table .check a{color:#fff;background:#00a795}
+.revervation_pop .inner .step .step3 .bottom .calendar .table .sun{color:#ce1717}
+.revervation_pop .inner .step .step3 .bottom .calendar .table .sat{color:#396ec5}
+/*
+.revervation_pop .inner .step .step3 .bottom .calendar .info{position:relative;padding:0 0 0 36px;height:28px;font-size:12px;color:#aeaeae;font-weight:700;line-height:1.1}
+.revervation_pop .inner .step .step3 .bottom .calendar .info:before{content:'';position:absolute;left:0;top:0;width:25px;height:25px;border:solid 1px #dbe2e3;background:#eff5f6}
+*/
+.revervation_pop .inner .step .step3 .bottom .calendar .info{padding:0 0 0 0;font-size:13px;color:#bf0334;font-weight:400;}
+.revervation_pop .inner .step .step3 .bottom .calendar .info span{font-weight:800;font-size:17px;color:#ed1066;}
+.revervation_pop .inner .step .step3 .bottom .calendar .info img{vertical-align: bottom;}
+
+
+.revervation_pop .inner .step .step3.select .bottom .calendar .info,
+.revervation_pop .inner .step .step3.ok .bottom .calendar .info{color:#3e3e3e;}
+.revervation_pop .inner .step .step3.ok .bottom .calendar .info:before,
+.revervation_pop .inner .step .step3.select .bottom .calendar .info:before{border-color:#b7c5c7;background:#deeaec}
+.revervation_pop .inner .step .step3 .bottom .time{float:right;width:80px;border:solid 1px #ddd}
+.revervation_pop .inner .step .step3 .bottom .time .in_tit{height:38px;font-size:15px;color:#b0b0b0;font-weight:800;text-align:center;line-height:38px;border-bottom:solid 1px #ddd}
+.revervation_pop .inner .step .step3.ok .bottom .time .in_tit,
+.revervation_pop .inner .step .step3.select .bottom .time .in_tit{color:#4f4f4f}
+.revervation_pop .inner .step .step3 .bottom .time ul{overflow:auto;max-height:270px}
+.revervation_pop .inner .step .step3 .bottom .time ul li{margin:4px 0 0 0}
+.revervation_pop .inner .step .step3 .bottom .time ul li:first-child{margin:0}
+.revervation_pop .inner .step .step3 .bottom .time ul li a{display:block;height:25px;font-size:14px;color:#4f4f4f;text-align:center;line-height:25px;text-align:center;cursor: pointer;}
+.revervation_pop .inner .step .step3 .bottom .time ul .check a{color:#fff;background:#00a795}
+.revervation_pop .inner .step .step4{margin:12px 0 0 0;width:100%;border-top:solid 1px #d4d4d4}
+.revervation_pop .inner .step .step4.select{border-color:#00a795}
+.revervation_pop .inner .step .step4 .tit{padding:0 0 0 34px;height:42px;font-size:18px;color:#a6a6a6;line-height:1.08}
+.revervation_pop .inner .step .step4.select .tit{color:#fff;background:#00a795;}
+.revervation_pop .inner .step .step4 .tit span{top:1px;color:#e5e5e5;vertical-align:middle}
+.revervation_pop .inner .step .step4.select .tit{color:#80d3ca;}
+.revervation_pop .inner .step .step4 .bottom{overflow:hidden;padding:12px 34px 16px 34px;background:#e4e4e4}
+.revervation_pop .inner .step .step4 .bottom .table{float:left;width:760px}
+.revervation_pop .inner .step .step4 .bottom .table table{font-size:15px}
+.revervation_pop .inner .step .step4 .bottom .table table th{padding:8px 0 0 0;height:32px;color:#7b7b7b;font-weight:700;vertical-align:top}
+.revervation_pop .inner .step .step4 .bottom .table table td{color:#171717;vertical-align:top;font-weight:700}
+.revervation_pop .inner .step .step4 .bottom .table table td input[type="text"]{display:inline-block;padding:0 8px;height:28px;text-align:center;border:solid 1px #c4c4c4;background:#fff;line-height:28px;box-sizing:border-box}
+.revervation_pop .inner .step .step4 .bottom .table table td .size_l{width:110px}
+.revervation_pop .inner .step .step4 .bottom .table table td .size_m{width:80px}
+.revervation_pop .inner .step .step4 .bottom .table table td .size_s{width:59px}
+.revervation_pop .inner .step .step4 .bottom .table table td .agree{margin:8px 0 0 0;padding:8px 0 0 0;width:206px;height:30px;font-size:13px;letter-spacing:-1px;font-weight:700;text-align:center;background:#fff}
+.revervation_pop .inner .step .step4 .bottom .table table td .agree > *{display:inline-block;vertical-align:middle}
+.revervation_pop .inner .step .step4 .bottom .table table td .agree .cs_form{margin:0 0 0 14px}
+.revervation_pop .inner .step .step4 .bottom .btn{float:left;margin:0 0 0 37px}
+.revervation_pop .inner .step .step4 .bottom .btn a{display:block;width:115px;height:115px;text-indent:-9999px;background:url('../../images/sub/sub2/2/btn2.png') no-repeat 0 100%}
+.revervation_pop .inner .step .step4 .bottom .btn a .on{display:block;width:115px;height:115px;text-indent:-9999px;background:url('../../images/sub/sub2/2/btn3.png') no-repeat 0 100% !important;}
+.revervation_pop .inner .step .step4.select .bottom .btn a{background-position:0 0}
+.revervation_pop .inner .btn_close{position:absolute;right:34px;top:26px}

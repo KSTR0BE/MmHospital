@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+  <configuration>
+  
+  <properties resource ="db.properties"/>
+  
+  <typeAliases>
+		<typeAlias type="kr.or.ddit.member.vo.MemberVO" alias="memVO"/>
+		<typeAlias type="kr.or.ddit.doctor.vo.DoctorVO" alias="docVO"/>
+		<typeAlias type="kr.or.ddit.doctor.vo.ClassVO" alias="clVO"/>
+		<typeAlias type="kr.or.ddit.nurse.vo.NurseVO" alias="nurVO"/>
+		<typeAlias type="kr.or.ddit.doctor.vo.DiagnosisVO" alias="dnVO"/>
+		<typeAlias type="kr.or.ddit.comm.vo.AtchFileVO" alias="atchFileVO"/>
+		<typeAlias type="kr.or.ddit.appointMent.vo.AppointMentVO" alias="appointMentVO"/>
+		<typeAlias type="kr.or.ddit.comm.vo.AtchFileDetailVO" alias="atchFileDetailVO"/>
+	</typeAliases>
+<!--   여러개의 환경을 사용할 수 있으며, 쓰고 싶은 환경을 골라 쓸 수 있다. -->
+  <environments default="dev">
+  		<environment id="dev">
+  			<transactionManager type="JDBC"/>
+  			<dataSource type="POOLED">
+  				<property name="driver" value="${driver}"/>
+  				<property name="url" value="${url}"/>
+  				<property name="username" value="${username}"/>
+  				<property name="password" value="${password}"/>
+  				<property name="poolMaximumActiveConnections" value="2"/><!-- 활성화된 최대 커넥션 수 -->
+				<property name="poolMaximumIdleConnections" value="2"/><!-- 유휴상태에서 최대 커넥션 수 -->
+  			</dataSource>
+  		</environment>
+  </environments>
+  
+  <mappers>
+  
+  		<mapper resource="mapper/member.xml" />
+  		<mapper resource="mapper/admin.xml"/>
+  		<mapper resource="mapper/notice.xml"/>
+  		<mapper resource="mapper/review.xml"/>
+  		<mapper resource="mapper/doctor.xml"/>
+  		<mapper resource="mapper/class.xml"/>
+  		<mapper resource="mapper/nurse.xml"/>
+  		<mapper resource="mapper/suggestions.xml"/>
+  		<mapper resource="mapper/appointMent.xml"/>
+  		<mapper resource="mapper/atchFile.xml"/>
+  		<mapper resource="mapper/diagnosis.xml"/>
+  		<mapper resource="mapper/admission.xml"/>
+  		<mapper resource="mapper/commentt.xml"/>
+  		<mapper resource="mapper/memberAdList.xml"/>
+  		<mapper resource="mapper/patientList.xml"/>
+  		<mapper resource="mapper/nurseMediList.xml"/>
+  		<mapper resource="mapper/nurseDiagnosis.xml"/>
+  		
+  </mappers>
+  
+  </configuration>

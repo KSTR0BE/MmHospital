@@ -1,0 +1,170 @@
+<%@page import="kr.or.ddit.doctor.vo.DoctorVO"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%
+
+	DoctorVO docVO = (DoctorVO)request.getAttribute("docVO");
+
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+ <%@include file="../includes/headcss.jsp" %>
+</head>
+<%@include file= "../includes/header.jsp" %>
+<style>
+#tbtb {
+	margin: 40px;
+	border: 4px double #00A796;
+	border-radius: 10px;
+	padding : 30px;
+}
+.Btn {
+	font-size : 15pt;
+	width: 300px;
+	height: 50px;
+	border: 1px solid gray;
+	background-color: #00A796;
+	align-content: center;
+	color: white;
+	border-radius: 10px;
+}
+#he {
+	margin : 50px;
+	text-align: center;
+}
+#mypage{
+	margin: 40px;
+	border: 4px double #00A796; /* 테두리 설정 */
+    padding: 100px;
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+    
+}
+
+#hehe {
+	color: red;
+	font-size: large;
+}
+
+h4 {
+	margin: 40px;
+	font-size: xx-large;
+	border-bottom: 2px solid gray;
+}
+
+#modify {
+	text-align: center;
+	margin: 50px;
+	font-size: x-large;
+	padding: 50px;
+	border-left: 2px solid gray;
+}
+
+#reg {
+	width: 200px
+}
+ </style>
+ <body>
+	<div id="mypage">
+		<div id="he">
+		<br> <br> <br><br> <br><br> <br><br> <br><br>
+			<h4>의사 상세정보</h4>
+		</div>
+		<br>
+		<div id="modify">
+				<div id = "tbtb">
+					<table>
+						<tr>
+							<td>전공과 :&nbsp</td>
+							<td><%=docVO.getCl_nm()%></td>
+						</tr>
+						<tr>
+							<td>이름:&nbsp</td>
+							<td><%=docVO.getDt_nm()%></td>
+						</tr>
+						<tr>
+							<td>주민번호:&nbsp</td>
+							<td><%=docVO.getDt_reg()%></td>
+						</tr>
+						<tr>
+							<td>I D:&nbsp</td>
+							<td><%=docVO.getDt_id()%></td>
+						</tr>
+						<tr>
+							<td>P W:&nbsp</td>
+							<td><%=docVO.getDt_pw()%></td>
+						</tr>
+						<tr>
+							<td>이메일:&nbsp</td>
+							<td><%=docVO.getDt_em()%></td>
+						</tr>
+						<tr>
+							<td>계정유무:&nbsp</td>
+							<td id="change">
+<% 						
+							if(docVO.getDt_yn().equals("Y")){
+%>
+								탈퇴계정
+<% 	
+							} else {
+%>								
+								가입계정
+<%
+							}
+%>						
+							</td>
+						</tr>
+					</table>
+				</div>
+			<div class="form-group">
+				<div>
+					<input type="button" id="Btn" class="Btn" value="계정삭제" data-dtno="<%=docVO.getDt_no()%>"
+					style="font-size: large; width: 120px; height: 40px; background-color: #00A796; color: white;">
+					<a href="<%=request.getContextPath() %>/adDoctorList.do">
+					<input type="button" class="Btn" value="목록"
+						style="font-size: large; width: 120px; height: 40px; background-color: #00A796; color: white;">
+						</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+$('#Btn').on('click',function(){
+
+	let conf = confirm("탈퇴처리 하시겠습니까?");
+	
+	if(conf){
+		 $.ajax({
+			type: 'get', //get은생략가능
+			url: '/MmHospital/adDoctorUpdate.do?dtNo='+ $(this).data('dtno'),
+			success: function(rst){
+				let data = JSON.parse(rst);
+				
+				if(data.dt_yn === 'Y'){
+					$('#change').text('탈퇴 계정');
+				} else {
+					$('#change').text('가입 계정');
+				}
+				
+			},
+			error: function(xhr) {
+				alert(xhr.status);
+			}
+		});
+		alert("정상적으로 탈퇴했습니다.");
+		
+	} else {
+		alert("탈퇴 취소했습니다.");
+	}
+});
+
+</script>
+	<!-- 	footer 영역 -->
+	 <%@include file="../includes/footer.jsp" %>
+</html>

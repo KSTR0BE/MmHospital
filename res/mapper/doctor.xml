@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="doctor">
+
+	<resultMap type="kr.or.ddit.doctor.vo.DoctorVO" id="docMap">
+	
+		<id column="dt_no" property="dt_no"/>
+		<result column="dt_nm" property="dt_nm"/>
+		<result column="dt_em" property="dt_em"/>
+		<result column="dt_reg" property="dt_reg"/>
+		<result column="dt_id" property="dt_id"/>
+		<result column="dt_pw" property="dt_pw"/>
+		<result column="cl_no" property="cl_no"/>
+		<result column="cl_nm" property="cl_nm"/>
+		<result column="dt_yn" property="dt_yn"/>
+		
+	</resultMap>
+	
+	<resultMap type="kr.or.ddit.doctor.vo.DiseaseVO" id="disMap">
+	
+		<id column="ds_co" property="ds_co"/>
+		<result column="ds_mid" property="ds_mid"/>
+		<result column="ds_min" property="ds_min"/>
+		
+	</resultMap>
+	
+	<resultMap type="kr.or.ddit.doctor.vo.MedicienVO" id="mediMap">
+	
+		<id column="md_no" property="md_no"/>
+		<result column="md_nm" property="md_nm"/>
+		
+	</resultMap>
+
+	<select id="getDoctor" resultMap="docMap">
+		SELECT * FROM DOCTOR
+		WHERE dt_id = #{dt_id}
+		AND dt_yn = 'N'
+	</select>
+	
+<!-- 의사계정 수정 -->
+	<update id="modifyDoctor" parameterType="docVO">
+		
+		update DOCTOR
+		set 
+			dt_pw = #{dt_pw},
+			dt_em = #{dt_em}
+			
+		where dt_id = #{dt_id}
+		
+	</update>
+	
+<!-- 관리자 의사계정 전체정보 -->	
+	<select id="DoctorList" resultMap="docMap">
+		SELECT D.DT_NO, D.DT_NM, D.DT_EM, D.DT_REG, D.DT_ID, D.DT_PW,
+		(SELECT CL_NM FROM CLASS C WHERE D.CL_NO = C.CL_NO) AS "CL_NM",
+		D.DT_YN
+    	FROM DOCTOR D
+    	ORDER BY D.DT_NO
+	</select>
+	
+<!-- 관리자 의사계정 상세정보 -->
+	<select id="DoctorDetail" resultMap="docMap">
+		SELECT D.DT_NO, D.DT_NM, D.DT_EM, D.DT_REG, D.DT_ID, D.DT_PW,
+		(SELECT CL_NM FROM CLASS C WHERE D.CL_NO = C.CL_NO) AS "CL_NM",
+		D.DT_YN
+    	FROM DOCTOR D
+		WHERE D.dt_no = #{dt_no}
+    	ORDER BY D.DT_NO
+	</select>
+	
+<!-- 관리자 의사계정 탈퇴 업데이트  -->
+	<update id="DoctorUpdate" parameterType="docVO" >
+		update DOCTOR
+		SET
+			dt_yn = 'Y'
+		WHERE dt_no = #{dt_no}	
+	</update>
+	
+<!-- 관리자 의사계정 추가 -->
+	<insert id="insertDoctor" parameterType="docVO" >
+		INSERT INTO DOCTOR (
+            DT_NO, DT_NM, DT_EM, DT_REG
+            ,DT_ID, DT_PW, CL_NO, DT_YN
+		
+		) VALUES (
+			SEQ_DT.nextval, #{dt_nm}, #{dt_em}, #{dt_reg},
+			#{dt_id}, #{dt_pw}, #{cl_no}, 'N'
+		)
+	</insert>
+	
+	
+	
+	
+	<select id="DiseaseMid" resultMap="disMap">
+		SELECT DISTINCT d1.DS_MID, d2.DS_MIN, d2.DS_CO
+		FROM DISEASE d1
+		JOIN DISEASE d2 ON d1.DS_MID = d2.DS_MID
+		ORDER BY d1.DS_MID, d2.DS_MIN
+	</select>
+	
+	<select id="AppointGetDoctor" parameterType="int" resultMap="docMap">
+		SELECT * FROM DOCTOR
+		WHERE cl_no = #{cl_no}
+		AND dt_yn = 'N'
+	</select>
+	
+	<select id="mediList" resultMap="mediMap">
+		SELECT MD_NO,MD_NM
+
+		FROM MEDICIEN
+	</select>
+	
+	<select id="getDoctorPassword" parameterType="String" resultType="String">
+		SELECT DT_PW FROM DOCTOR
+		WHERE DT_ID = #{userId}
+	</select>
+	
+	
+	
+	
+	
+</mapper>

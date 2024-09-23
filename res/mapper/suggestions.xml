@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sg">
+
+<!-- 
+	이 영역에 SQL문에 맞는 태그를 사용하여 작성하면 된다.
+	
+	기본적인 태그들...
+	<select> ~~~ </select>
+	<insert> ~~~ </insert>
+	<update> ~~~ </update>
+	<delete> ~~~ </delete>
+	
+	
+	위 태그들에서 사용되는 주요 속성들
+	
+	1) id : 해당 SQL문을 호출할 때 namespace명과 연결하여 사용하는 쿼리ID값
+	
+	2) parameterType : SQL문을 실행할 때 사용될 데이터를 담은 파라미터 객체 타입을 지정한다.
+					(보통 VO클래스, 자바의 기본 자료형 등이 사용된다.)
+					(typeAlias로 지정한 alias명으로 지정할 수 있다.)
+		
+	3) resultType : select문을 실행한 결과값을 담을 객체 타입을 지정한다.
+					(보통 VO클래스, 자바의 기본 자료형 등이 사용된다.)
+					(typeAlias로 지정한 alias명으로 지정할 수 있다.)
+					
+	4) resultMap : 결과 레코드 컬럼명과 VO객체의 속성명이 다를 경우에 적절한 매핑정보를
+				제공하기 위해 사용된다.
+				
+ -->
+ 	
+<!--  	건의사항 Map -->
+	<resultMap type="kr.or.ddit.suggestions.vo.SuggestionsVO" id="sgMap">
+		
+		<id column="SG_NO" property="sgNo"/>
+		<result column="SG_TIT" property="sgTit"/>
+		<result column="SG_CON" property="sgCon"/>
+		<result column="SG_NM" property="sgNm"/>
+		<result column="SG_DT" property="sgDt"/>
+		<result column="SG_HIT" property="sgHit"/>
+		<result column="MEM_NO" property="memNo"/>
+		<result column="DT_NO" property="dtNo"/>
+		<result column="ATCH_FILE_ID" property="atchFileId"/>
+	
+	</resultMap>
+	
+<!-- 	건의사항 조회 -->
+	<select id="sgList" parameterType="map" resultMap="sgMap">
+		
+		SELECT A.*
+		FROM (SELECT ROWNUM AS RNUM, B.* 
+				FROM (SELECT * 
+				FROM SUGGESTIONS ORDER BY SG_NO DESC) B
+		 		<![CDATA[
+		 		WHERE ROWNUM <= #{end})A
+				WHERE A.RNUM >= #{start}
+		   		 ]]>	
+	
+	</select>
+	
+<!-- 	건의사항 상세 -->
+	<select id="sgGet" resultMap="sgMap">
+	
+		SELECT *
+		FROM SUGGESTIONS
+		WHERE SG_NO = #{sgNo}
+	
+	</select>
+
+<!-- 	건의사항 등록(회원) -->
+	<insert id="sgInsert" parameterType="kr.or.ddit.suggestions.vo.SuggestionsVO">
+	
+		INSERT INTO SUGGESTIONS
+		(SG_NO, SG_TIT, SG_CON, MEM_NO, SG_NM, ATCH_FILE_ID)
+		VALUES
+		(SEQ_SG.NEXTVAL, #{sgTit}, #{sgCon}, #{memNo}, #{sgNm}, #{atchFileId})
+	
+	</insert>
+	
+<!-- 	건의사항 등록(의사) -->
+	<insert id="sgInsertD" parameterType="kr.or.ddit.suggestions.vo.SuggestionsVO">
+	
+		INSERT INTO SUGGESTIONS
+		(SG_NO, SG_TIT, SG_CON, DT_NO, SG_NM, ATCH_FILE_ID)
+		VALUES
+		(SEQ_SG.NEXTVAL, #{sgTit}, #{sgCon}, #{dtNo}, #{sgNm}, #{atchFileId})
+	
+	</insert>
+	
+<!-- 	건의사항 수정 -->
+	<update id="sgUpdate" parameterType="kr.or.ddit.suggestions.vo.SuggestionsVO">
+		
+		UPDATE SUGGESTIONS
+		SET SG_TIT = #{sgTit},
+			SG_CON = #{sgCon},
+			ATCH_FILE_ID = #{atchFileId}
+		WHERE SG_NO = #{sgNo}
+	
+	</update>
+	
+<!-- 	건의사항 삭제 -->
+	<delete id="sgDelete" parameterType="String">
+	
+		DELETE FROM SUGGESTIONS
+		WHERE SG_NO = #{sgNo}
+	
+	</delete>
+	
+	<!-- 	조회수 -->
+	<update id="sgHit" parameterType="String">
+	
+		UPDATE SUGGESTIONS	
+		SET SG_HIT = SG_HIT + 1
+		WHERE SG_NO = #{sgNo}
+	
+	</update>
+	
+<!-- 	공지사항 검색 -->
+	<select id="sgSearch" resultMap="sgMap">
+	
+		SELECT *
+		FROM SUGGESTIONS
+		WHERE SG_TIT LIKE '%' || #{sgTit} || '%'
+	
+	</select>
+	
+	<select id="countList" resultType="int">
+	
+		SELECT COUNT(*)
+		FROM SUGGESTIONS
+		
+	</select>
+	
+	<select id="countList2" resultType="int">
+	
+		SELECT COUNT(*)
+		FROM SUGGESTIONS
+		WHERE SG_TIT LIKE '%' || #{sgTit} || '%'
+		
+	</select>
+	
+		<!-- 게시글 + 검색 -->
+	<select id="sgSearch2" parameterType="map" resultMap="sgMap">
+	
+		SELECT A.*		
+		FROM (SELECT ROWNUM AS RNUM, B.*  
+		FROM (SELECT * 
+				FROM SUGGESTIONS 
+	            WHERE  SG_TIT LIKE '%' || '${sgTit}' || '%'        
+	            ORDER BY SG_NO DESC
+	  			) B
+		<![CDATA[       		 		
+			WHERE ROWNUM <= #{end}) A
+			WHERE A.RNUM >= #{start}
+		]]>
+		
+	</select>
+	
+</mapper>

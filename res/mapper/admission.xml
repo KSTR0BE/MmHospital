@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="admission">
+
+	<resultMap type="kr.or.ddit.doctor.vo.AdmissionVO" id="amMap">
+		<result column="dg_no" property="dg_no"/>
+		<result column="mem_no" property="mem_no"/>
+		<result column="am_no" property="am_no"/>
+		<result column="ns_no" property="ns_no"/>
+		<result column="pt_no" property="pt_no"/>
+		<result column="dt_no" property="dt_no"/>
+		
+		<result column="am_rm" property="am_rm"/>
+		<result column="mem_nm" property="mem_nm"/>
+		<result column="mem_reg" property="mem_reg"/>
+		<result column="dg_tit" property="dg_tit"/>
+		<result column="md_nm" property="md_nm"/>
+		<result column="pt_et" property="pt_et"/>
+		<result column="pt_lv" property="pt_lv"/>
+				
+	
+		
+	</resultMap>
+	
+	<select id="DoctorAdList" resultMap="amMap">
+    	SELECT (SELECT MEM_NM FROM MEMBER M WHERE M.MEM_NO = A.MEM_NO) AS "MEM_NM",
+           	(SELECT MEM_REG FROM MEMBER M WHERE M.MEM_NO = A.MEM_NO) AS "MEM_REG",
+          	(SELECT DG_TIT FROM DIAGNOSIS D WHERE D.DG_NO = A.DG_NO) AS "DG_TIT",
+           	(SELECT M.MD_NM
+               	FROM DIAGNOSIS D
+               	JOIN MEDICIEN M ON D.MD_NO = M.MD_NO
+               	WHERE D.DG_NO = A.DG_NO) AS "MD_NM",
+           	A.AM_NO,
+           	(SELECT PT_ET FROM PATIENT P WHERE P.PT_NO = A.PT_NO) AS "PT_ET",
+           	(SELECT PT_LV FROM PATIENT P WHERE P.PT_NO = A.PT_NO) AS "PT_LV"
+    	FROM ADMISSION A
+    	WHERE (SELECT D.DT_NO FROM DIAGNOSIS D WHERE D.DG_NO = A.DG_NO) = #{dt_no}
+				
+	</select>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+</mapper>

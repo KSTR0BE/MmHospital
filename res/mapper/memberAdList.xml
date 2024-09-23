@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="patientList">
+
+	<resultMap type="kr.or.ddit.member.vo.MemberAdListVO" id="listMap">
+		<result column="dg_no" property="dg_no"/>
+		<result column="mem_no" property="mem_no"/>
+		<result column="am_no" property="am_no"/>
+		
+		
+		<result column="mem_nm" property="mem_nm"/>
+		<result column="dg_tit" property="dg_tit"/>
+		<result column="ns_nm" property="ns_nm"/>
+	</resultMap>
+
+	<select id="NursePatientList" resultMap="listMap">
+<!-- 			입원환자 전체목록 쿼리입니다. -->
+		SELECT A.MEM_NO, 
+       (SELECT M.MEM_NM FROM MEMBER M WHERE M.MEM_NO = A.MEM_NO) AS MEM_NM,
+       (SELECT D.DG_TIT FROM DIAGNOSIS D WHERE D.DG_NO = A.DG_NO) AS DG_TIT,
+       A.AM_NO,
+       (SELECT N.NS_NM FROM NURSE N WHERE N.NS_NO = A.NS_NO) AS NS_NM
+		FROM ADMISSION A
+		
+		
+	</select>
+
+
+</mapper>

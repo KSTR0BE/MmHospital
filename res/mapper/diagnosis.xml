@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="diagnosis">
+
+	<resultMap type="kr.or.ddit.doctor.vo.DiagnosisVO" id="dgMap">
+		<id column="dg_no" property="dg_no"/>
+		<result column="dg_tit" property="dg_tit"/>
+		<result column="dg_con" property="dg_con"/>
+		<result column="md_no" property="md_no"/>
+		<result column="ds_no" property="ds_no"/>
+		<result column="cl_no" property="cl_no"/>
+		<result column="dt_no" property="dt_no"/>
+		<result column="pt_no" property="pt_no"/>
+		
+		<result column="md_nm" property="md_nm"/>
+		<result column="mem_nm" property="mem_nm"/>
+		<result column="mem_reg" property="mem_reg"/>
+		<result column="dg_dt" property="dg_dt"/>
+	</resultMap>
+	
+	<resultMap type="kr.or.ddit.doctor.vo.DiagnosisDetailVO" id="dtMap">
+		<id column="dg_no" property="dg_no"/>
+		<result column="mem_nm" property="mem_nm"/>
+		<result column="dg_tit" property="dg_tit"/>
+		<result column="dg_con" property="dg_con"/>
+		<result column="dg_dt" property="dg_dt"/>
+		<result column="md_nm" property="md_nm"/>
+		<result column="cl_nm" property="cl_nm"/>
+	</resultMap>
+
+	<resultMap type="kr.or.ddit.nurse.vo.NurseVO" id="nurseMap">
+		<id column="ns_no" property="ns_no"/>
+		<result column="ns_nm" property="ns_nm"/>
+		<result column="ns_em" property="ns_em"/>
+		<result column="ns_reg" property="ns_reg"/>
+		<result column="ns_id" property="ns_id"/>
+		<result column="ns_pw" property="ns_pw"/>
+		<result column="ns_yn" property="ns_yn"/>
+	</resultMap>
+	
+	<select id="DoctorDnList" resultMap="dgMap">
+		SELECT D.DG_NO , 
+			(SELECT MEM_NM FROM MEMBER M WHERE D.MEM_NO = M.MEM_NO) AS "MEM_NM",
+			(SELECT MEM_REG FROM MEMBER M WHERE D.MEM_NO = M.MEM_NO) AS "MEM_REG",
+			D.DG_TIT,
+			(SELECT MD_NM FROM MEDICIEN C WHERE D.MD_NO = C.MD_NO) AS "MD_NM",
+			D.DG_DT
+				FROM DIAGNOSIS D
+				
+	</select>
+	
+	<insert id="insertPatient" parameterType="kr.or.ddit.doctor.vo.DiagnosisInsertVO">
+		INSERT INTO PATIENT(PT_NO, PT_ET, PT_LV, PT_DYN) 
+		VALUES (SEQ_PT.NEXTVAL, #{dg_dt}, #{pt_lv}, 'N')
+	
+	</insert>
+	
+	<insert id="insertDiagnosis" parameterType="kr.or.ddit.doctor.vo.DiagnosisInsertVO">
+	
+		INSERT INTO DIAGNOSIS(DG_NO,DG_TIT,DG_CON,DG_DT,MD_NO,CL_NO,DT_NO,PT_NO,MEM_NO,DG_ST,DS_CO)
+            VALUES(SEQ_DG.NEXTVAL,#{dg_tit},#{dg_con},#{dg_dt},#{md_no},#{cl_no},#{dt_no},SEQ_PT.CURRVAL,#{mem_no},#{dg_st},#{ds_co})
+            
+	</insert>
+	
+	<insert id="insertAdmission" parameterType="kr.or.ddit.doctor.vo.DiagnosisInsertVO">
+		INSERT INTO ADMISSION(DG_NO, MEM_NO, AM_NO, NS_NO, PT_NO) 
+		VALUES (SEQ_DG.CURRVAL, #{mem_no}, #{am_no}, #{ns_no}, SEQ_PT.CURRVAL)
+		
+	
+	</insert>
+	
+
+	
+	<select id="nurseList" resultMap="nurseMap">
+		SELECT NS_NO,NS_NM,NS_EM,NS_REG,NS_ID,NS_PW,NS_YN
+		FROM NURSE
+		WHERE NS_YN = 'N'
+	
+	</select>
+		
+	<!-- 검색결과 가져오기 -->
+	<select id="getSearchResults" parameterType="String" resultMap="dtMap">
+    	SELECT  DIAGNOSIS.DG_NO, DIAGNOSIS.DG_TIT, DIAGNOSIS.DG_CON, DIAGNOSIS.DG_DT,
+   			    MEDICIEN.MD_NM,  CLASS.CL_NM, DOCTOR.DT_NM, MEMBER.MEM_NM
+   			    FROM DIAGNOSIS
+        JOIN MEMBER ON DIAGNOSIS.MEM_NO = MEMBER.MEM_NO
+        JOIN MEDICIEN ON DIAGNOSIS.MD_NO = MEDICIEN.MD_NO
+        JOIN CLASS ON DIAGNOSIS.CL_NO = CLASS.CL_NO
+        JOIN DOCTOR ON DIAGNOSIS.DT_NO = DOCTOR.DT_NO 
+   				
+   	<where>
+        <if test="searchType == 'mem_no'">
+            DIAGNOSIS.MEM_NO = #{inputField}
+        </if>
+        <if test="searchType == 'mem_name'">
+            MEMBER.MEM_NM LIKE '%' || #{inputField} || '%'
+        </if>
+    </where>
+</select>
+		
+</mapper>

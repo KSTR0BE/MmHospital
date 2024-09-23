@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="nurseDig">
+
+	<resultMap type="kr.or.ddit.nurse.vo.NurDiagnosisListVO" id="nurDigMap">
+		<result column="mem_no" property="mem_no"/>
+		<result column="mem_gn" property="mem_gn"/>
+		<result column="mem_reg" property="mem_reg"/>
+		<result column="mem_nm" property="mem_nm"/>
+		<result column="mem_addr" property="mem_addr"/>
+		<result column="mem_addr2" property="mem_addr2"/>
+		<result column="mem_tel" property="mem_tel"/>
+		<result column="dg_tit" property="dg_tit"/>
+		<result column="dg_dt" property="dg_dt"/>
+		<result column="dg_con" property="dg_con"/>
+		<result column="gd_dt" property="gd_dt"/>
+		
+		<result column="md_nm" property="md_nm"/>
+		<result column="md_no" property="md_no"/>
+		<result column="dg_no" property="dg_no"/>
+		<result column="dt_nm" property="dt_nm"/>
+		
+		
+	</resultMap>
+<!-- 	입원환자 처방 상세조회 -->
+	<select id="dignosisList" resultMap="nurDigMap">
+		 SELECT 
+       (SELECT M.MEM_NM FROM MEMBER M WHERE M.MEM_NO = A.MEM_NO) AS MEM_NM,
+       A.MEM_NO,
+       (SELECT M.MEM_GN FROM MEMBER M WHERE M.MEM_NO = A.MEM_NO) AS MEM_GN,
+       (SELECT M.MEM_REG FROM MEMBER M WHERE M.MEM_NO = A.MEM_NO) AS MEM_REG,
+       (SELECT M.MEM_ADDR FROM MEMBER M WHERE M.MEM_NO = A.MEM_NO) AS MEM_ADDR,
+       (SELECT M.MEM_ADDR2 FROM MEMBER M WHERE M.MEM_NO = A.MEM_NO) AS MEM_ADDR2,
+       (SELECT M.MEM_TEL FROM MEMBER M WHERE M.MEM_NO = A.MEM_NO) AS MEM_TEL,
+       (SELECT D.DG_TIT FROM DIAGNOSIS D WHERE D.DG_NO = A.DG_NO) AS DG_TIT,
+       (SELECT D.DG_DT FROM DIAGNOSIS D WHERE D.DG_NO = A.DG_NO) AS DG_DT,
+       (SELECT M.MD_NM 
+        FROM DIAGNOSIS D 
+        JOIN MEDICIEN M ON D.MD_NO = M.MD_NO 
+        WHERE D.DG_NO = A.DG_NO) AS MD_NM,
+       (SELECT D.DG_CON FROM DIAGNOSIS D WHERE D.DG_NO = A.DG_NO) AS DG_CON,
+       (SELECT DT.DT_NM 
+        FROM DIAGNOSIS D 
+        JOIN DOCTOR DT ON D.DT_NO = DT.DT_NO 
+        WHERE D.DG_NO = A.DG_NO) AS DT_NM
+		FROM ADMISSION A
+		WHERE A.MEM_NO = #{mem_no}
+	</select>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+</mapper>

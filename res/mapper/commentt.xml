@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cm">
+
+<!-- 
+	이 영역에 SQL문에 맞는 태그를 사용하여 작성하면 된다.
+	
+	기본적인 태그들...
+	<select> ~~~ </select>
+	<insert> ~~~ </insert>
+	<update> ~~~ </update>
+	<delete> ~~~ </delete>
+	
+	
+	위 태그들에서 사용되는 주요 속성들
+	
+	1) id : 해당 SQL문을 호출할 때 namespace명과 연결하여 사용하는 쿼리ID값
+	
+	2) parameterType : SQL문을 실행할 때 사용될 데이터를 담은 파라미터 객체 타입을 지정한다.
+					(보통 VO클래스, 자바의 기본 자료형 등이 사용된다.)
+					(typeAlias로 지정한 alias명으로 지정할 수 있다.)
+		
+	3) resultType : select문을 실행한 결과값을 담을 객체 타입을 지정한다.
+					(보통 VO클래스, 자바의 기본 자료형 등이 사용된다.)
+					(typeAlias로 지정한 alias명으로 지정할 수 있다.)
+					
+	4) resultMap : 결과 레코드 컬럼명과 VO객체의 속성명이 다를 경우에 적절한 매핑정보를
+				제공하기 위해 사용된다.
+				
+ -->
+<!--  	답글 Map -->
+ 	<resultMap type="kr.or.ddit.commentt.vo.CommenttVO" id="cmMap">
+ 	
+ 		<result column="CM_NO" property="cmNo"/>
+ 		<result column="CM_CON" property="cmCon"/>
+ 		<result column="CM_DT" property="cmDt"/>
+ 		<result column="SG_NO" property="sgNo"/>
+ 	
+ 	</resultMap>
+ 	
+<!--  	답글 등록 -->
+	<insert id="cmInsert" parameterType="kr.or.ddit.commentt.vo.CommenttVO">
+		
+		INSERT INTO COMMENTT
+		(CM_NO, CM_CON, SG_NO)
+		VALUES
+		(SEQ_CM.NEXTVAL, #{cmCon}, #{sgNo})	
+	
+	</insert>
+	
+<!-- 	답글 조회 -->
+	<select id="cmGet" resultMap="cmMap">
+	
+		SELECT *
+		FROM COMMENTT
+		WHERE SG_NO = #{sgNo}
+	
+	</select>
+	
+<!-- 	답글 수정 -->
+	<update id="cmUpdate" parameterType="kr.or.ddit.commentt.vo.CommenttVO">
+	
+		UPDATE COMMENTT
+		SET CM_CON = #{cmCon}
+		WHERE SG_NO = #{sgNo}
+		
+	</update>
+	
+<!-- 	답글 삭제 -->
+	<delete id="cmDelete" parameterType="String">
+	
+		DELETE FROM COMMENTT
+		WHERE SG_NO = #{sgNo}
+	
+	</delete>
+	
+</mapper>

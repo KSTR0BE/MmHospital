@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="patList">
+
+<resultMap type="kr.or.ddit.member.vo.PatientListVO" id="patMap">
+		<result column="dg_tit" property="dg_tit"/>
+		<result column="pt_et" property="pt_et"/>
+		<result column="pt_lv" property="pt_lv"/>
+		<result column="pt_dyn" property="pt_dyn"/>
+		<result column="mem_no" property="mem_no"/>
+		
+		
+		<result column="dt_nm" property="dt_nm"/>
+		<result column="cl_nm" property="cl_nm"/>
+	</resultMap>
+	
+	<select id="PatientList" resultMap="patMap">
+<!-- 	입퇴원내역 쿼리 -->
+
+		SELECT
+		    D.DG_TIT,
+		    P.PT_ET,
+		    P.PT_LV,
+		    DR.DT_NM,
+		    CL.CL_NM
+		FROM ADMISSION A
+		JOIN DIAGNOSIS D ON A.DG_NO = D.DG_NO
+		JOIN PATIENT P ON D.PT_NO = P.PT_NO
+		JOIN DOCTOR DR ON D.DT_NO = DR.DT_NO
+		JOIN CLASS CL ON D.CL_NO = CL.CL_NO
+		WHERE A.MEM_NO = #{mem_no}
+		
+	
+	
+	</select>
+	
+	
+
+	
+</mapper>

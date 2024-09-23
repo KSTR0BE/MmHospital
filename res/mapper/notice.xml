@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nt">
+
+<!-- 
+	이 영역에 SQL문에 맞는 태그를 사용하여 작성하면 된다.
+	
+	기본적인 태그들...
+	<select> ~~~ </select>
+	<insert> ~~~ </insert>
+	<update> ~~~ </update>
+	<delete> ~~~ </delete>
+	
+	
+	위 태그들에서 사용되는 주요 속성들
+	
+	1) id : 해당 SQL문을 호출할 때 namespace명과 연결하여 사용하는 쿼리ID값
+	
+	2) parameterType : SQL문을 실행할 때 사용될 데이터를 담은 파라미터 객체 타입을 지정한다.
+					(보통 VO클래스, 자바의 기본 자료형 등이 사용된다.)
+					(typeAlias로 지정한 alias명으로 지정할 수 있다.)
+		
+	3) resultType : select문을 실행한 결과값을 담을 객체 타입을 지정한다.
+					(보통 VO클래스, 자바의 기본 자료형 등이 사용된다.)
+					(typeAlias로 지정한 alias명으로 지정할 수 있다.)
+					
+	4) resultMap : 결과 레코드 컬럼명과 VO객체의 속성명이 다를 경우에 적절한 매핑정보를
+				제공하기 위해 사용된다.
+				
+ -->
+ 
+<!--  	공지사항 Map -->
+
+	<resultMap type="kr.or.ddit.notice.vo.NoticeVO" id="ntMap">
+	
+		<id column="NT_NO" property="ntNo"/>
+		<result column="NT_TIT" property="ntTit"/>
+		<result column="NT_DT" property="ntDt"/>
+		<result column="NT_HIT" property="ntHit"/>
+		<result column="NT_NM" property="ntNm"/>
+		<result column="NT_CON" property="ntCon"/>
+		<result column="AD_NO" property="adNo"/>
+		<result column="ATCH_FILE_ID" property="atchFileId"/>
+	
+	</resultMap>
+	
+<!-- 	공지사항 조회 -->
+	
+	<select id="ntList" parameterType="map" resultMap="ntMap">
+		
+		SELECT A.*
+		FROM (SELECT ROWNUM AS RNUM, B.* 
+				FROM (SELECT * 
+				FROM NOTICE ORDER BY NT_NO DESC) B
+		 		<![CDATA[
+		 		WHERE ROWNUM <= #{end})A
+				WHERE A.RNUM >= #{start}
+		   		 ]]>	
+	
+	</select>
+	
+<!-- 	공지사항 상세 -->
+	<select id="ntGet" resultMap="ntMap">
+	
+		SELECT *
+		FROM NOTICE
+		WHERE NT_NO = #{ntNo}
+	
+	</select>
+	
+<!-- 	공지사항 등록 -->
+	<insert id="ntInsert" parameterType="kr.or.ddit.notice.vo.NoticeVO">
+		
+		INSERT INTO NOTICE
+		(NT_NO, NT_TIT, NT_CON, AD_NO, NT_NM, ATCH_FILE_ID)
+		VALUES
+		(SEQ_NT.NEXTVAL, #{ntTit}, #{ntCon}, #{adNo}, #{ntNm}, #{atchFileId})
+		
+	</insert>
+	
+<!-- 	공지사항 수정 -->
+	<update id="ntUpdate" parameterType="kr.or.ddit.notice.vo.NoticeVO">
+		
+		UPDATE NOTICE
+		SET NT_TIT = #{ntTit},
+			NT_CON = #{ntCon},
+			ATCH_FILE_ID = #{atchFileId}
+		WHERE NT_NO = #{ntNo}
+	
+	</update>
+	
+<!-- 	공지사항 삭제 -->
+	<delete id="ntDelete" parameterType="String">
+	
+		DELETE FROM NOTICE
+		WHERE NT_NO = #{ntNo}
+	
+	</delete>
+	
+<!-- 	조회수 -->
+	<update id="ntHit" parameterType="String">
+	
+		UPDATE NOTICE
+		SET NT_HIT = NT_HIT + 1
+		WHERE NT_NO = #{ntNo}
+	
+	</update>
+	
+<!-- 	공지사항 검색 -->
+	<select id="ntSearch" parameterType="map" resultMap="ntMap">
+	
+		SELECT A.*
+		FROM (SELECT ROWNUM AS RNUM, B.* 
+				FROM (SELECT * 
+				FROM NOTICE ORDER BY NT_NO DESC) B
+		 		<![CDATA[
+		 		WHERE ROWNUM <= #{end})A
+				WHERE A.RNUM >= #{start}
+		   		 ]]>	
+		AND NT_TIT LIKE '%' || #{ntTit} || '%'
+	
+	</select>
+	
+	
+	<!-- 게시글 + 검색 -->
+	<select id="ntSearch2" parameterType="map" resultMap="ntMap">
+		SELECT A.*		
+		FROM (SELECT ROWNUM AS RNUM, B.*  
+		FROM (SELECT * 
+				FROM NOTICE 
+	            WHERE  NT_TIT LIKE '%' || '${ntTit}' || '%'        
+	            ORDER BY NT_NO DESC
+	  			) B
+		<![CDATA[       		 		
+			WHERE ROWNUM <= #{end}) A
+			WHERE A.RNUM >= #{start}
+		]]>
+	</select>
+	
+	<!-- 게시글 + 검색 -->
+	<select id="countList" resultType="int">
+	
+		SELECT COUNT(*)
+		FROM NOTICE
+		
+	</select>
+	
+	<select id="countList2" resultType="int">
+	
+		SELECT COUNT(*)
+		FROM NOTICE
+		WHERE NT_TIT LIKE '%' || #{ntTit} || '%'
+		
+	</select>
+	
+</mapper>

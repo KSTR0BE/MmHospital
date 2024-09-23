@@ -1,0 +1,53 @@
+@charset "utf-8";
+div{box-sizing:border-box}
+.red{color:#dd2f2f !important}
+/** email **/
+.email{padding:40px;color:#333}
+.email h1{margin:0 0 26px 0;font-size:27px;font-weight:800}
+.email .txt{padding:25px 40px;font-size:15px;line-height:1.7;border:solid 1px #e3e3e3}
+.email .red{margin:32px 0 0 0;font-weight:700}
+
+
+.terms{font-size:15px;color:#666;line-height:1.5}
+.terms{padding:40px;color:#333}
+.terms h1{margin:0 0 26px 0;font-size:27px;font-weight:800}
+.terms .txt{margin:0 0 18px 0}
+.terms .txt p{margin:40px 0 0 0}
+.terms .guide_col2,
+.terms .guide{overflow:hidden;margin:0 0 40px 0;padding:25px 40px;border:solid 1px #e3e3e3}
+.terms .guide_col2{width:680px}
+.terms .guide_col2 .guide{float:left;margin:0;padding:0;width:50%;border:none;box-sizing:border-box}
+.terms .guide li{margin:5px 0 0 0}
+.terms .guide li:first-child{margin:0}
+.terms .guide li a{color:#333;font-weight:700;}
+.terms .guide li a:hover{text-decoration:underline}
+.terms .guide1 li{margin-top:3px;}
+.terms .guide2 li{margin-top:3px;}
+.terms .detail{color:#666}
+.terms .detail h2{margin:0 0 16px 0;font-size:18px;color:#333;font-weight:700}
+.terms .detail .innerTxt{color:#333}
+.terms .detail .innerTxt .info{margin:35px 0 0 0;color:#666;font-size:15px}
+.terms .detail .txtlist + h2,
+.terms .detail .innerTxt + h2,
+.terms .detail .inner + h2{margin-top:35px}
+.terms .detail .txt2{margin:0 0 30px 0;color:#333}
+.terms .detail .txt2 p{color:#dd2f2f}
+.terms .detail .txt3{margin:0 0 30px 0}
+.terms .detail .txtlist{line-height:1.7}
+.terms .detail .txtlist > li{margin:30px 0 0 0}
+.terms .detail .txtlist > li:first-child{margin:0}
+.terms .detail .txtlist > li p{font-weight:700}
+.terms .detail .inner{line-height:1.7}
+.terms .detail .inner.first{margin:0}
+.terms .detail .inner dt{font-weight:700; margin-top:5px;}
+.terms .detail .inner dd + dt{margin:30px 0 0 0}
+.privacy .detail .inner dd + dt{margin:5px 0 0 0}
+.terms .detail .inner dd ul .blank{margin:0 0 30px 0}
+.terms .detail .inner dd ul li ul{padding:0 0 0 12px}
+.terms .detail .etc{margin:30px 0 0 0}
+.terms .detail .etc *{color:#dd2f2f}
+.terms .detail table{width:100%;border-top:solid 2px #ccc}
+.terms .detail table th{height:38px;font-weight:700;border-left:solid 1px #ccc;background:#f9f9f9}
+.terms .detail table td{padding:10px 6px;border:solid 1px #ccc;border-right:none}
+.terms .detail table td:first-child,
+.terms .detail table th:first-child{border-left:none;text-align:center}
